@@ -13,22 +13,34 @@
       </thead>
 
       <tbody>
-        <featurelist-item
-          v-for="(feature, findex) in features"
-          v-bind:feature="feature"
-          v-bind:findex="findex"
-          v-bind:onRemove="onRemove"
-          v-bind:onToggleState="onToggleState"></featureitem>
+        <template
+          v-for="(feature, findex) in features">
+          <featurelist-item
+            v-if="!feature.editing"
+            :feature="feature"
+            :findex="findex"
+            :onRemove="onRemove"
+            :onEdit="onEdit"
+            :onToggleState="onToggleState"></featurelist-item>
+          <featurelist-form
+            v-else
+            :feature="feature"
+            :findex="findex"
+            :onAdd="onAdd"
+            :onUpdate="onUpdate"></featurelist-form>
+        </template>
+        <!-- new feature form -->
+        <featurelist-form
+          :feature="{}"
+          :onAdd="onAdd"></featurelist-form>
       </tbody>
 
       <featurelist-sum
-        v-bind:totalCount="totalCount"
-        v-bind:totalEnabled="totalEnabled"></featurelist-sum>
+        :totalCount="totalCount"
+        :totalEnabled="totalEnabled"></featurelist-sum>
 
     </table>
 
-    <!-- new feature form -->
-    <featurelist-form v-bind:onAdd="onAdd"></featurelist-form>
 
   </div>
 </template>
@@ -43,13 +55,13 @@ export default {
   data () {
     return {
       features: [
-        {name: 'superuser', description: 'Superuser switch', type: 'alpha', enabled: true},
-        {name: 'no3rdparty', description: 'Disable 3rd party code', type: 'beta', enabled: true},
-        {name: 'test1', description: 'test #1', type: 'beta', enabled: true},
-        {name: 'test2', description: 'test #2', type: 'alpha', enabled: true},
-        {name: 'test3', description: 'test #3', type: 'beta', enabled: false},
-        {name: 'test4', description: 'test #4', type: 'alpha', enabled: true},
-        {name: 'test5', description: 'test #5', type: 'alpha', enabled: false}
+        {name: 'superuser', description: 'Superuser switch', type: 'alpha', enabled: true, editing: false},
+        {name: 'no3rdparty', description: 'Disable 3rd party code', type: 'beta', enabled: true, editing: false},
+        {name: 'test1', description: 'test #1', type: 'beta', enabled: true, editing: false},
+        {name: 'test2', description: 'test #2', type: 'alpha', enabled: true, editing: false},
+        {name: 'test3', description: 'test #3', type: 'beta', enabled: false, editing: false},
+        {name: 'test4', description: 'test #4', type: 'alpha', enabled: true, editing: false},
+        {name: 'test5', description: 'test #5', type: 'alpha', enabled: false, editing: false}
       ],
       totalCount: 0,
       totalEnabled: 0
@@ -72,6 +84,12 @@ export default {
     },
     onToggleState (index) {
       this.features[index].enabled = !this.features[index].enabled
+    },
+    onEdit (index) {
+      this.features[index].editing = true
+    },
+    onUpdate (featureObj, index) {
+      Object.assign(this.features[index], featureObj)
     }
   },
   components: {

@@ -6,7 +6,8 @@
       <a href="javascript:;" v-on:click.prevent="onToggleState(findex)">{{ feature.enabled ? 'disable' : 'enable' }}</a>
     </td>
     <td class="actions">
-      <a href="javascript:;" v-on:click.prevent="onRemove(findex)">delete</a>
+      <a href="javascript:;" v-on:click.prevent="onRemove(findex)">delete</a>,
+      <a href="javascript:;" v-on:click.prevent="onEdit(findex)">edit</a>
     </td>
   </tr>
 </template>
@@ -14,7 +15,7 @@
 <script>
 export default {
   name: 'featurelist-item',
-  props: ['feature', 'findex', 'onRemove', 'onToggleState'],
+  props: ['feature', 'findex', 'onRemove', 'onEdit', 'onToggleState'],
   filters: {
     capitalize (value) {
       return value.charAt(0).toUpperCase() + value.slice(1)

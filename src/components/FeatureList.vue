@@ -55,13 +55,13 @@ export default {
   data () {
     return {
       features: [
-        {name: 'superuser', description: 'Superuser switch', type: 'alpha', enabled: true, editing: false},
-        {name: 'no3rdparty', description: 'Disable 3rd party code', type: 'beta', enabled: true, editing: false},
-        {name: 'test1', description: 'test #1', type: 'beta', enabled: true, editing: false},
-        {name: 'test2', description: 'test #2', type: 'alpha', enabled: true, editing: false},
-        {name: 'test3', description: 'test #3', type: 'beta', enabled: false, editing: false},
-        {name: 'test4', description: 'test #4', type: 'alpha', enabled: true, editing: false},
-        {name: 'test5', description: 'test #5', type: 'alpha', enabled: false, editing: false}
+        {name: 'superuser', description: 'Superuser switch', type: 'alpha', enabled: true},
+        {name: 'no3rdparty', description: 'Disable 3rd party code', type: 'beta', enabled: true},
+        {name: 'test1', description: 'test #1', type: 'beta', enabled: true},
+        {name: 'test2', description: 'test #2', type: 'alpha', enabled: true},
+        {name: 'test3', description: 'test #3', type: 'beta', enabled: false},
+        {name: 'test4', description: 'test #4', type: 'alpha', enabled: true},
+        {name: 'test5', description: 'test #5', type: 'alpha', enabled: false}
       ],
       totalCount: 0,
       totalEnabled: 0
@@ -86,7 +86,7 @@ export default {
       this.features[index].enabled = !this.features[index].enabled
     },
     onEdit (index) {
-      this.features[index].editing = true
+      this.$set(this.features[index], 'editing', true)
     },
     onUpdate (featureObj, index) {
       Object.assign(this.features[index], featureObj)
